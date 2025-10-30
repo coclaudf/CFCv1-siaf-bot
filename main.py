@@ -9,7 +9,7 @@ import logging
 from collections import defaultdict
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import (
-    Application,
+    ApplicationBuilder,
     CommandHandler,
     MessageHandler,
     ContextTypes,
@@ -271,7 +271,9 @@ if __name__ == "__main__":
         print("✅ FAQ cargado correctamente.")
         print("🚀 Iniciando bot en Render...")
 
-    app = Application.builder().token(TELEGRAM_TOKEN).build()
+    from telegram.ext import ApplicationBuilder  # aseguramos import correcto
+
+    app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, manejar_mensaje))
     app.run_polling()
